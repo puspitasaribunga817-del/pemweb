@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>table2.html</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h3.page-label {
+            color: #a0c4ff;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px;
+            width: 100%;
+            max-width: 950px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        caption {
+            color: #b5e48c;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+
+        thead th {
+            background: linear-gradient(135deg, #2d6a4f, #1b4332);
+            color: white;
+            padding: 11px 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        thead tr:first-child th:first-child { border-radius: 8px 0 0 0; }
+        thead tr:first-child th:last-child  { border-radius: 0 8px 0 0; }
+
+        tbody tr:nth-child(odd)  { background: rgba(255,255,255,0.05); }
+        tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        tbody tr:hover           { background: rgba(45,106,79,0.2); }
+
+        tbody td {
+            color: #e0e0e0;
+            padding: 9px 11px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.78rem;
+            vertical-align: middle;
+        }
+
+        .hari { color: #b5e48c; font-weight: 700; font-size: 0.85rem; }
+        .matkul { text-align: left; color: #f0f0f0; }
+        .kode { color: #90e0ef; font-family: monospace; font-size: 0.72rem; }
+        .sks  { color: #ffd166; font-weight: 700; }
+
+        .catatan td {
+            background: rgba(45,106,79,0.25) !important;
+            color: #b5e48c !important;
+            font-weight: 600;
+        }
+
+        /* Kelompok sesi header */
+        .sesi-siang { background: linear-gradient(135deg, #1b4332, #0a2e1d) !important; }
+        .sesi-malam { background: linear-gradient(135deg, #0f2027, #071014) !important; }
+    </style>
+</head>
+<body>
+    <h3 class="page-label">🖥️ table2.html</h3>
+    <div class="card">
+        <table>
+            <caption>Jadwal Kuliah per Sesi — Semester 1 Kelas SI-1B</caption>
+            <thead>
+                <tr>
+                    <th rowspan="2">Hari</th>
+                    <th colspan="2">Sesi Sore</th>
+                    <th colspan="3">Sesi Malam / Lanjutan</th>
+                    <th rowspan="2">Keterangan</th>
+                </tr>
+                <tr>
+                    <!-- Sore -->
+                    <th>Slot 1</th>
+                    <th>Slot 2</th>
+                    <!-- Malam -->
+                    <th>Slot 3</th>
+                    <th>Slot 4</th>
+                    <th>Slot 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- KAMIS: 2 matkul -->
+                <tr>
+                    <td class="hari">Kamis</td>
+                    <td class="matkul">Pemrograman Web 1<br><span class="kode">KK21251953</span><br><span class="sks">3 SKS</span><br><small>16:00–18:30</small></td>
+                    <td class="matkul">Kalkulus 1<br><span class="kode">KD21250312</span><br><span class="sks">2 SKS</span><br><small>18:00–19:40</small></td>
+                    <td colspan="3">—</td>
+                    <td>2 Mata Kuliah</td>
+                </tr>
+
+                <!-- JUMAT: 3 matkul -->
+                <tr>
+                    <td class="hari">Jumat</td>
+                    <td class="matkul">Agama Islam<br><span class="kode">KU21250112</span><br><span class="sks">2 SKS</span><br><small>16:00–17:40</small></td>
+                    <td class="matkul">Pancasila<br><span class="kode">KU21250312</span><br><span class="sks">2 SKS</span><br><small>17:40–19:20</small></td>
+                    <td class="matkul">Pengantar TI<br><span class="kode">KD21250412</span><br><span class="sks">2 SKS</span><br><small>19:20–21:00</small></td>
+                    <td colspan="2">—</td>
+                    <td>3 Mata Kuliah</td>
+                </tr>
+
+                <!-- SABTU: 4 matkul -->
+                <tr>
+                    <td class="hari">Sabtu</td>
+                    <td class="matkul">Algoritma &amp; Pemrog. 1<br><span class="kode">KU21250113</span><br><span class="sks">2 SKS</span><br><small>08:00–09:40</small></td>
+                    <td class="matkul">Dasar Kom. Bisnis<br><span class="kode">KK21254412</span><br><span class="sks">2 SKS</span><br><small>10:00–11:40</small></td>
+                    <td class="matkul">Manajemen &amp; Org.<br><span class="kode">KK21250213</span><br><span class="sks">2 SKS</span><br><small>12:50–14:30</small></td>
+                    <td class="matkul" colspan="2">Orkom &amp; Arkom<br><span class="kode">KD21250213</span><br><span class="sks">3 SKS</span><br><small>14:30–17:00</small></td>
+                    <td>4 Mata Kuliah</td>
+                </tr>
+
+                <!-- CATATAN -->
+                <tr class="catatan">
+                    <td colspan="6">Catatan: Total 9 Mata Kuliah — 20 SKS</td>
+                    <td>Jadwal dapat berubah</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index.html</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-dark:   #0d0d1a;
+            --bg-card:   rgba(255,255,255,0.04);
+            --border:    rgba(255,255,255,0.08);
+            --text-main: #f0f0f0;
+            --text-sub:  #8a8fa8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Animated background blobs ── */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.18;
+            pointer-events: none;
+            animation: blobFloat 10s ease-in-out infinite;
+        }
+        .bg-blob.b1 { width: 500px; height: 500px; background: #e94560; top: -120px; left: -100px; animation-delay: 0s; }
+        .bg-blob.b2 { width: 400px; height: 400px; background: #0096c7; bottom: -80px; right: -80px; animation-delay: 3s; }
+        .bg-blob.b3 { width: 300px; height: 300px; background: #7209b7; top: 50%; left: 50%; animation-delay: 6s; }
+        @keyframes blobFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%       { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* ── Header ── */
+        header {
+            text-align: center;
+            padding: 60px 20px 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 18px;
+            background: rgba(233,69,96,0.15);
+            border: 1px solid rgba(233,69,96,0.35);
+            border-radius: 20px;
+            color: #e94560;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 30%, #a0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            max-width: 460px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── Divider ── */
+        .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #e94560, #0096c7);
+            border-radius: 2px;
+            margin: 22px auto 50px;
+        }
+
+        /* ── Grid ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Card ── */
+        .page-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px 26px 24px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(.23,1,.32,1),
+                        box-shadow 0.35s ease,
+                        border-color 0.35s ease;
+        }
+
+        /* Glowing top border on hover */
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Subtle inner glow */
+        .page-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, var(--accent-glow) 0%, transparent 65%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .page-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-border);
+            box-shadow: 0 20px 50px var(--accent-shadow);
+        }
+
+        .page-card:hover::before { opacity: 1; }
+        .page-card:hover::after  { opacity: 1; }
+
+        /* Icon */
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: var(--accent-bg);
+            border: 1px solid var(--accent-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            transition: transform 0.35s ease;
+        }
+
+        .page-card:hover .card-icon {
+            transform: rotate(-8deg) scale(1.1);
+        }
+
+        .card-body { flex: 1; }
+
+        .card-filename {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-text);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.82rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: var(--accent-text);
+            font-size: 0.8rem;
+            font-weight: 600;
+            gap: 6px;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.35s ease;
+        }
+
+        .page-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .card-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ── Color themes per card ── */
+        .theme-red    { --accent: #e94560; --accent-bg: rgba(233,69,96,0.1);  --accent-border: rgba(233,69,96,0.3);  --accent-text: #e94560; --accent-glow: rgba(233,69,96,0.08);  --accent-shadow: rgba(233,69,96,0.2); }
+        .theme-blue   { --accent: #48cae4; --accent-bg: rgba(72,202,228,0.1); --accent-border: rgba(72,202,228,0.3); --accent-text: #48cae4; --accent-glow: rgba(72,202,228,0.08);  --accent-shadow: rgba(72,202,228,0.2); }
+        .theme-purple { --accent: #a855f7; --accent-bg: rgba(168,85,247,0.1); --accent-border: rgba(168,85,247,0.3); --accent-text: #a855f7; --accent-glow: rgba(168,85,247,0.08);  --accent-shadow: rgba(168,85,247,0.2); }
+        .theme-orange { --accent: #f77f00; --accent-bg: rgba(247,127,0,0.1);  --accent-border: rgba(247,127,0,0.3);  --accent-text: #f77f00; --accent-glow: rgba(247,127,0,0.08);   --accent-shadow: rgba(247,127,0,0.2); }
+        .theme-green  { --accent: #22c55e; --accent-bg: rgba(34,197,94,0.1);  --accent-border: rgba(34,197,94,0.3);  --accent-text: #22c55e; --accent-glow: rgba(34,197,94,0.08);   --accent-shadow: rgba(34,197,94,0.2); }
+        .theme-pink   { --accent: #f72585; --accent-bg: rgba(247,37,133,0.1); --accent-border: rgba(247,37,133,0.3); --accent-text: #f72585; --accent-glow: rgba(247,37,133,0.08);  --accent-shadow: rgba(247,37,133,0.2); }
+        .theme-yellow { --accent: #fbbf24; --accent-bg: rgba(251,191,36,0.1); --accent-border: rgba(251,191,36,0.3); --accent-text: #fbbf24; --accent-glow: rgba(251,191,36,0.08);  --accent-shadow: rgba(251,191,36,0.2); }
+        .theme-teal   { --accent: #2dd4bf; --accent-bg: rgba(45,212,191,0.1); --accent-border: rgba(45,212,191,0.3); --accent-text: #2dd4bf; --accent-glow: rgba(45,212,191,0.08);  --accent-shadow: rgba(45,212,191,0.2); }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-sub);
+            font-size: 0.78rem;
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background blobs -->
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="badge">✦ Latihan HTML &amp; CSS</div>
+        <h1>Dashboard Halaman</h1>
+        <p>Klik kartu di bawah untuk membuka halaman yang ingin kamu lihat.</p>
+        <div class="divider"></div>
+    </header>
+
+    <!-- Grid of page cards -->
+    <div class="grid">
+
+        <!-- Profile -->
+        <a href="profile.html" class="page-card theme-red">
+            <div class="card-icon">👤</div>
+            <div class="card-body">
+                <div class="card-filename">profile.html</div>
+                <div class="card-title">Profil Mahasiswa</div>
+                <div class="card-desc">Informasi diri, foto profil, dan target karir mahasiswa.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- About Me -->
+        <a href="about-me.html" class="page-card theme-blue">
+            <div class="card-icon">📖</div>
+            <div class="card-body">
+                <div class="card-filename">about-me.html</div>
+                <div class="card-title">Tentang Saya</div>
+                <div class="card-desc">Deskripsi diri, teknologi yang dipelajari, dan target belajar.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Educations -->
+        <a href="educations.html" class="page-card theme-purple">
+            <div class="card-icon">🎓</div>
+            <div class="card-body">
+                <div class="card-filename">educations.html</div>
+                <div class="card-title">Riwayat Pendidikan</div>
+                <div class="card-desc">Tabel riwayat pendidikan dari SD hingga perguruan tinggi.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Course Schedule -->
+        <a href="course-schedule.html" class="page-card theme-orange">
+            <div class="card-icon">📅</div>
+            <div class="card-body">
+                <div class="card-filename">course-schedule.html</div>
+                <div class="card-title">Jadwal Kuliah</div>
+                <div class="card-desc">Jadwal mata kuliah semester 1 lengkap dengan ruangan.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Hobbies -->
+        <a href="hobbies.html" class="page-card theme-pink">
+            <div class="card-icon">🎬</div>
+            <div class="card-body">
+                <div class="card-filename">hobbies.html</div>
+                <div class="card-title">Hobi</div>
+                <div class="card-desc">Daftar hobi dan urutan hobi favorit menggunakan list HTML.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Form -->
+        <a href="form.html" class="page-card theme-teal">
+            <div class="card-icon">📋</div>
+            <div class="card-body">
+                <div class="card-filename">form.html</div>
+                <div class="card-title">Formulir Pendaftaran</div>
+                <div class="card-desc">Form pendaftaran lengkap: input, radio, checkbox, select, dan file upload.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Table 1 -->
+        <a href="table1.html" class="page-card theme-yellow">
+            <div class="card-icon">📊</div>
+            <div class="card-body">
+                <div class="card-filename">table1.html</div>
+                <div class="card-title">Jadwal Perkuliahan</div>
+                <div class="card-desc">Tabel jadwal semester dengan rowspan &amp; colspan bertingkat.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+        <!-- Table 2 -->
+        <a href="table2.html" class="page-card theme-green">
+            <div class="card-icon">🖥️</div>
+            <div class="card-body">
+                <div class="card-filename">table2.html</div>
+                <div class="card-title">Jadwal Laboratorium</div>
+                <div class="card-desc">Tabel jadwal lab komputer dengan struktur pagi &amp; siang.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+        <!-- Table 3 -->
+        <a href="table2.html" class="page-card theme-green">
+            <div class="card-icon">📁</div>
+            <div class="card-body">
+                <div class="card-filename">table3.html</div>
+                <div class="card-title">Laporan Nilai Mahasiswa</div>
+                <div class="card-desc">Tabel Laporan Nilai Mahasiswa TI dengan struktur Semester1 &amp; Semester2.</div>
+            </div>
+            <div class="card-arrow">
+                Buka halaman
+                <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+        </a>
+
+
+    </div>
+
+    <footer>
+        &copy; 2024 &nbsp;·&nbsp; Latihan HTML &amp; CSS &nbsp;·&nbsp; Dibuat dengan ❤️
+    </footer>
+
+</body>
+</html>
